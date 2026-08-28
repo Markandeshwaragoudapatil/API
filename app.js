@@ -1,0 +1,31 @@
+const express = require("express");
+const mongoose=require("mongoose");
+const productRoutes = require("./routes/productRoutes");
+const PORT=process.env.PORT;
+
+const app = express();
+app.use(express.json());
+
+app.use("/products", productRoutes);
+app.use((err,req,res,next)=>{
+    res.status(err.statusCode || 500).json(
+        {message:err.message || "Something went wrong"}
+    );
+
+});
+app.use((req,res)=>{
+    res.status(400).json(
+        {message:"Invalid URL"}
+    );
+});
+
+const startServer=async ()=>{
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log("Database connected through mongoose");
+    app.listen(PORT || 3000,()=>{
+        console.log(`Listenig on ${PORT}`);
+        
+    })
+    
+}
+startServer();
