@@ -1,12 +1,23 @@
 const express = require("express");
 const mongoose=require("mongoose");
+const cookieParser =require("cookie-parser");
 const productRoutes = require("./routes/productRoutes");
+const loginRoutes = require("./routes/loginRoutes");
+const profileRoutes=require("./routes/profileRoutes");
 const PORT=process.env.PORT;
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
+
+const sessions = {};
+
+app.use("/login",loginRoutes)
 app.use("/products", productRoutes);
+app.use("/profile",profileRoutes);
+
+
 app.use((err,req,res,next)=>{
     res.status(err.statusCode || 500).json(
         {message:err.message || "Something went wrong"}
