@@ -1,7 +1,15 @@
-const mongoose= require("mongoose");
-const Session=require("../models/loginModel");
-
-const addUser=async (user)=>{
-    return await Session.create(user)
+const Session=require("../models/Session");
+const getSession=async(sessionId)=>{
+    return await Session.findById(sessionId)
 }
-module.exports={addUser}
+const addSession=async (user)=>{
+    return await Session.create({
+        userId:user._id,
+        key:user.password,
+        expiresAt:new Date(Date.now()+5*60*1000)
+    })
+}
+module.exports={
+    getSession,
+    addSession
+}

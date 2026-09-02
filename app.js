@@ -4,18 +4,23 @@ const cookieParser =require("cookie-parser");
 const productRoutes = require("./routes/productRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const profileRoutes=require("./routes/profileRoutes");
+const logoutRoutes=require("./routes/logoutRoutes");
 const PORT=process.env.PORT;
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+
+
 app.use("/login",loginRoutes)
 app.use("/products", productRoutes);
 app.use("/profile",profileRoutes);
+app.use("/logout",logoutRoutes);
 
 
 app.use((err,req,res,next)=>{
+    console.error(err.stack);
     res.status(err.statusCode || 500).json(
         {message:err.message || "Something went wrong"}
     );
