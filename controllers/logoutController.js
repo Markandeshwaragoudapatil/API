@@ -5,7 +5,7 @@ const logoutUser = async (req, res) => {
 
     await deleteSession(sessionId);
 
-    res.clearCookie("sessionId");
+    req.clearCookie("sessionId");
 
     res.status(200).json({
         message: "Logged out successfully"

@@ -1,4 +1,5 @@
 const {getSession} = require("../services/loginService");
+const { deleteSession } = require("../services/logoutService");
 const authenticate=async (req,res,next)=>{
     const sessionId=req.cookies.sessionId;
     if(sessionId===undefined){
@@ -12,6 +13,13 @@ const authenticate=async (req,res,next)=>{
             {message:"Not authenticated, Please login"}
         )
     }
+    if(session.expiresAt<new Date()){
+        await deleteSession(sessionId);
+        res.clearCookie("sessionId");
+        return res.status(401).json(
+            {message:"Session expired, Please login again"}
+        )
+    }   
     req.session=session;
     next();    
 };
