@@ -4,3 +4,5 @@ test.js
 /config
 .postman
 /postman
+generate-structure.ps1
+project-structure.md

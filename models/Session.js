@@ -10,7 +10,8 @@ const sessionSchema = new mongoose.Schema({
 
     key: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     expiresAt: {

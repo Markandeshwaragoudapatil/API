@@ -1,20 +1,19 @@
 const {addSession}=require("../services/loginService");
 const { deleteSession } = require("../services/logoutService");
-const { checkUser,addUser } = require("../services/profileService");
+const { checkUser } = require("../services/profileService");
 
 const loginUser=async (req,res)=>{
-    const {name,username,password}=req.body;
+    const {username,password}=req.body;
     const session={
         username:username,
         password:password
     }
-    if(req.cookies.sessionId){
-        await deleteSession(req.cookies.sessionId)
-    }
     const user=await checkUser(session);
     if(user){
+        const oldSessionId=req.cookies.sessionId
         const session=await addSession(user);
-        res.cookie("sessionId",session._id.toString(),{
+        if(oldSessionId) await deleteSession(oldSessionId)
+        res.cookie("sessionId",session.key.toString(),{
             httpOnly:true,
             secure:true
         }); 
@@ -23,15 +22,9 @@ const loginUser=async (req,res)=>{
         }); 
     }
     else{
-        const newUser=await addUser({name,username,password});
-        const session=await addSession(newUser);
-        res.cookie("sessionId",session._id.toString(),{
-            httpOnly:true,
-            secure:true
-        });
-        return res.status(201).json({
-            message:"User created and logged in succesfully"
-        }); 
+        return res.status(402).json({
+            message:"Please register before login"
+        })
     } 
     
 

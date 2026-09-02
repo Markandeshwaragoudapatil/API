@@ -5,6 +5,7 @@ const productRoutes = require("./routes/productRoutes");
 const loginRoutes = require("./routes/loginRoutes");
 const profileRoutes=require("./routes/profileRoutes");
 const logoutRoutes=require("./routes/logoutRoutes");
+const registerRoutes=require("./routes/registerRoutes");
 const PORT=process.env.PORT;
 
 const app = express();
@@ -12,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 
-
+app.use("/register",registerRoutes)
 app.use("/login",loginRoutes)
 app.use("/products", productRoutes);
 app.use("/profile",profileRoutes);
