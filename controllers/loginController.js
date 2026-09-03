@@ -1,6 +1,5 @@
-const {addSession}=require("../services/loginService");
-const { deleteSession } = require("../services/logoutService");
 const { checkUser } = require("../services/profileService");
+const {createToken}=require("../utils/jwt")
 
 const loginUser=async (req,res)=>{
     const {username,password}=req.body;
@@ -13,12 +12,9 @@ const loginUser=async (req,res)=>{
     const user=await checkUser(session);
 
     if(user){
-        const oldSessionId=req.cookies.sessionId
-        const session=await addSession(user);
-
-        if(oldSessionId) await deleteSession(oldSessionId)
-            
-        res.cookie("sessionId",session.key.toString(),{
+        const token=createToken(user)
+  
+        res.cookie("token",token,{
             httpOnly:true,
             secure:true
         }); 
