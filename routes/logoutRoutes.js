@@ -1,8 +1,8 @@
 const express=require("express");
 const router=express.Router();
 const {logoutUser}=require("../controllers/logoutController");
-const {authenticate}=require("../middleware/authMiddleware");
+const { authenticateJWT } = require("../middleware/jwtAuthMiddleware");
 
-router.delete("/",authenticate,logoutUser);
+router.delete("/",authenticateJWT,logoutUser);
 
 module.exports = router;
