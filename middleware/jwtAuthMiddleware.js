@@ -13,7 +13,6 @@ const authenticateJWT =(req,res,next)=>{
         const payload=jwt.verify(token,process.env.JWT_SECRET);
         req.userId=payload.userId;
     }catch(error){
-        console.log(error);
         throw new AppError("Invalid Token",401)
     }
     next()
