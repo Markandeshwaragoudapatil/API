@@ -64,6 +64,16 @@ The server uses port `3000` if `PORT` is not set. The database connection must s
 
 > **Cookie / local development note:** the current login and registration handlers set the JWT cookie with `secure: true`. Browsers send Secure cookies only over HTTPS, so cookie-based authentication may not work on plain HTTP localhost. For local development, configure cookie options appropriately; in production, use HTTPS.
 
+## Automated tests
+
+Run the automated API tests with:
+
+```bash
+npm test
+```
+
+The test suite uses Node.js's built-in test runner and does not require a running MongoDB instance. GitHub Actions runs the same command on pushes to the test branch and on pull requests targeting `main`.
+
 ## API endpoints
 
 All request and response bodies use JSON unless noted otherwise.
