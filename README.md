@@ -176,7 +176,3 @@ API/
 - Because authentication uses cookies, assess CSRF protections for your deployment and client architecture.
 - Validate and sanitize incoming request data and return consistent error responses.
 - Give admin privileges only to trusted accounts.
-
-## License
-
-No license is specified in the repository at the time this README was written. Add a `LICENSE` file if you want to define how others may use, modify, and distribute this project.
